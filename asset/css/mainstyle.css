@@ -1,0 +1,225 @@
+/* ✅ Exam container with watermark */
+.container {
+    width: 50%;
+    margin: auto;
+    background: white;
+    padding: 20px;
+    box-shadow: 0px 0px 10px gray;
+    border-radius: 10px;
+    position: relative;
+    height: 70vh; /* ✅ Keep container height flexible */
+    display: flex;
+    flex-direction: column;
+    overflow: hidden; /* Prevents overflow issues */
+    background: repeating-linear-gradient(
+        -30deg,
+        rgba(0, 0, 0, 0.08) 0px,
+        rgba(0, 0, 0, 0.08) 200px,
+        transparent 200px,
+        transparent 400px
+    );
+}
+/* ✅ Scrollable exam form */
+#examForm {
+    position: relative;
+    background: rgba(255, 255, 255, 0.9); 
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px gray;
+    max-height: 80vh; /* ✅ Restrict height to 80% of viewport */
+    overflow-y: auto; /* ✅ Enable scrolling when needed */
+}
+
+
+/* ✅ Watermark Text */
+.container::before {
+    content: "© YoursTanmay";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(-30deg);
+    font-size: 3rem;
+    font-weight: bold;
+    color: rgba(0, 0, 0, 0.1); /* Light blur effect */
+    text-align: center;
+    white-space: nowrap;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.container::after {
+    content: "© YoursTanmay";
+    position: absolute;
+    top: 20%;
+    left: 20%;
+    transform: rotate(-30deg);
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: rgba(0, 0, 0, 0.05);
+    pointer-events: none;
+}
+
+.container .question-card {
+    position: relative;
+    z-index: 1; /* Ensure exam content is above the watermark */
+    background: rgba(255, 255, 255, 0.9); /* Slight white overlay */
+    padding: 15px;
+    border-radius: 8px;
+}
+
+.watermark {
+    position: absolute;
+    transform: rotate(-30deg);
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: rgba(0, 0, 0, 0.05); /* Lighter for exam-like effect */
+    pointer-events: none;
+    white-space: nowrap;
+    z-index: 0; /* Keep it behind the content */
+}
+
+/* ✅ Watermark inside each question card */
+.question-card {
+    position: relative;
+    background: rgba(255, 255, 255, 0.9); /* Slight overlay */
+    padding: 15px;
+    border-radius: 8px;
+    z-index: 1; /* Keep it above the watermark */
+}
+
+/* ✅ Watermark inside each question */
+.question-card::before {
+    content: "© YoursTanmay";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(-30deg);
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: rgba(0, 0, 0, 0.08);
+    white-space: nowrap;
+    pointer-events: none;
+    z-index: 0;
+}
+
+
+/* Default question card style */
+.question-card {
+    text-align: left;
+    margin-bottom: 15px;
+    padding: 10px;
+    border: 2px solid #ddd;
+    background-color: white; /* ✅ No initial color */
+    transition: background-color 0.3s ease-in-out, border 0.3s ease-in-out;
+}
+
+/* Correct answer */
+.correct-answer {
+    background-color: #d4edda !important; /* Light green */
+    border: 2px solid #28a745 !important; /* Green border */
+}
+
+/* Incorrect answer */
+.incorrect-answer {
+    background-color: #f8d7da !important; /* Light red */
+    border: 2px solid #dc3545 !important; /* Red border */
+}
+
+.question-number {
+    font-weight: bold;
+    color: #008000;
+    margin-bottom: 5px;
+}
+
+.question-text {
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+.options {
+    list-style: none;
+    padding: 0;
+}
+
+.options li {
+    margin-bottom: 8px;
+}
+
+.options input[type="checkbox"],
+.options input[type="radio"] {
+    margin-right: 10px;
+}
+
+/*=================================*/
+/* Password container */
+.password-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* ✅ Center vertically */
+    align-items: center; /* ✅ Center horizontally */
+    text-align: center;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px gray;
+    width: 50%;
+    margin: auto;
+    height: 250px;
+}
+
+/* ✅ Loader Button (Hidden by Default) */
+.loader {
+    display: none;
+    width: 40px;
+    height: 40px;
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid #007bff;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-top: 15px;
+}
+
+/* ✅ Loader Animation */
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+
+/* Hide exam form initially */
+.hidden {
+    display: none;
+}
+
+/* Style input and button */
+.password-container input {
+    padding: 10px;
+    font-size: 16px;
+    margin: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    width: 250px;
+    text-align: center;
+}
+
+.password-container button {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: blue;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.password-container button:hover {
+    background-color: darkblue;
+}
+
+/* Error message */
+.error {
+    color: red;
+    margin-top: 10px;
+}
+/*=================================*/
+
