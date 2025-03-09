@@ -66,8 +66,11 @@ function updateScore() {
         }
     });
 
-    // ✅ Update score dynamically in the navbar
-    document.getElementById("result").innerHTML = `Score: ${score}/${questions.length}`;
+    // ✅ Update score dynamically in the navbar - Check if element exists first
+    const resultElement = document.getElementById("result");
+    if (resultElement) {
+        resultElement.innerHTML = `Score: ${score}/${questions.length}`;
+    }
 }
 
 // ✅ Ensure Everything Loads Properly
