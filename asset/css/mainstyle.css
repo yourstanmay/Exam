@@ -1,13 +1,14 @@
 /* ✅ Exam container with watermark */
 .container {
-    width: 50%;
+    width: 90%; /* Changed from 50% to 90% for better mobile responsiveness */
+    max-width: 800px; /* Added max-width for larger screens */
     margin: auto;
     background: white;
     padding: 20px;
     box-shadow: 0px 0px 10px gray;
     border-radius: 10px;
     position: relative;
-    height: 70vh; /* ✅ Keep container height flexible */
+    min-height: 70vh; /* Changed from height to min-height for flexibility */
     display: flex;
     flex-direction: column;
     overflow: hidden; /* Prevents overflow issues */
@@ -19,6 +20,12 @@
         transparent 400px
     );
 }
+
+/* Use CSS variables for viewport height */
+:root {
+    --vh: 1vh;
+}
+
 /* ✅ Scrollable exam form */
 #examForm {
     position: relative;
@@ -27,6 +34,7 @@
     border-radius: 10px;
     box-shadow: 0px 0px 10px gray;
     max-height: 80vh; /* ✅ Restrict height to 80% of viewport */
+    max-height: calc(var(--vh, 1vh) * 80); /* Alternative using CSS variable */
     overflow-y: auto; /* ✅ Enable scrolling when needed */
 }
 
@@ -162,9 +170,13 @@
     background: rgba(255, 255, 255, 0.9);
     border-radius: 10px;
     box-shadow: 0px 0px 10px gray;
-    width: 50%;
+    width: 90%; /* Changed from 50% to 90% for better mobile responsiveness */
+    max-width: 400px; /* Added max-width for larger screens */
     margin: auto;
-    height: 250px;
+    height: auto; /* Changed from fixed height to auto */
+    min-height: 250px; /* Added min-height instead of fixed height */
+    position: relative; /* Added for better positioning */
+    z-index: 10; /* Ensure it's above background elements */
 }
 
 /* ✅ Loader Button (Hidden by Default) */
@@ -198,7 +210,8 @@
     margin: 10px;
     border-radius: 5px;
     border: 1px solid #ccc;
-    width: 250px;
+    width: 90%; /* Changed from fixed width to percentage */
+    max-width: 250px; /* Added max-width */
     text-align: center;
 }
 
@@ -222,4 +235,99 @@
     margin-top: 10px;
 }
 /*=================================*/
+
+/* Responsive form class */
+.responsive-form {
+    width: 100%;
+    max-width: 100%;
+    margin: 0 auto;
+}
+
+/* Improve option styling for better touch targets */
+.options li label {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 8px;
+    cursor: pointer;
+}
+
+.options li label span {
+    flex: 1;
+    padding-left: 5px;
+}
+
+.answer-input {
+    margin-top: 3px;
+    margin-right: 8px;
+}
+
+/* Add media queries for better responsiveness */
+@media (max-width: 768px) {
+    .container {
+        width: 95%;
+        padding: 15px;
+    }
+    
+    .container::before, 
+    .container::after {
+        font-size: 2rem; /* Smaller watermark on mobile */
+    }
+    
+    .question-card::before {
+        font-size: 1rem; /* Smaller watermark in questions on mobile */
+    }
+    
+    .question-text {
+        font-size: 14px; /* Slightly smaller text on mobile */
+    }
+    
+    .options li {
+        margin-bottom: 12px; /* More space between options for touch */
+    }
+    
+    .password-container {
+        width: 95%;
+        padding: 15px;
+    }
+}
+
+/* For very small screens */
+@media (max-width: 480px) {
+    .container {
+        width: 100%;
+        padding: 10px;
+        min-height: calc(var(--vh, 1vh) * 70); /* Use CSS variable for mobile */
+    }
+    
+    .password-container {
+        width: 100%;
+        padding: 15px 10px;
+        min-height: 200px; /* Smaller min-height on very small screens */
+    }
+    
+    .password-container input {
+        width: 90%;
+    }
+    
+    .password-container button {
+        width: 90%;
+        max-width: 250px;
+    }
+    
+    /* Improve touch targets on mobile */
+    .options li {
+        padding: 8px 0;
+    }
+    
+    .options li label {
+        padding: 5px 0;
+    }
+    
+    /* Adjust watermarks for mobile */
+    .container::before,
+    .container::after,
+    .question-card::before {
+        opacity: 0.05; /* Make watermarks more subtle on mobile */
+    }
+}
 

@@ -14,10 +14,10 @@ function renderQuestions() {
             <ul class="options">
                 ${q.options.map((option, i) => `
                     <li>
-                        <label>
+                        <label class="d-flex align-items-start">
                             <input type="${q.multiselect ? "checkbox" : "radio"}" 
-                                   name="q${index}" value="${i}" class="answer-input">
-                            ${option}
+                                   name="q${index}" value="${i}" class="answer-input mt-1 mr-2">
+                            <span>${option}</span>
                         </label>
                     </li>
                 `).join("")}
@@ -31,6 +31,9 @@ function renderQuestions() {
     document.querySelectorAll(".answer-input").forEach(input => {
         input.addEventListener("change", updateScore);
     });
+    
+    // Add responsive class to the form container
+    form.classList.add("responsive-form");
 }
 
 // Update Score
@@ -113,6 +116,10 @@ async function checkPassword() {
         document.getElementById("examForm").classList.remove("hidden"); // ✅ Show exam form
 
         renderQuestions(); // ✅ Render questions
+        
+        // Adjust container height for exam form
+        document.querySelector('.container').style.height = 'auto';
+        document.querySelector('.container').style.minHeight = '70vh';
     } else {
         document.getElementById("errorMessage").innerText = "Incorrect password. Try again!";
         document.getElementById("submitButton").style.display = "block"; // ✅ Show Submit Button again
@@ -124,8 +131,26 @@ async function checkPassword() {
 // ✅ Ensure only the password screen is visible initially
 document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("examForm").classList.add("hidden"); // ✅ Hide exam initially
+    
+    // Handle mobile viewport height issues
+    const vh = window.innerHeight * 0.01;
+    document.documentElement.style.setProperty('--vh', `${vh}px`);
+    
+    // Listen for resize events to update the viewport height variable
+    window.addEventListener('resize', () => {
+        const vh = window.innerHeight * 0.01;
+        document.documentElement.style.setProperty('--vh', `${vh}px`);
+    });
 });
 
 //=================================
 // Water Mark
 //=================================
+
+// Add window resize handler for responsive adjustments
+window.addEventListener('resize', function() {
+    // Adjust container height based on content
+    if (!document.getElementById("examForm").classList.contains("hidden")) {
+        document.querySelector('.container').style.height = 'auto';
+    }
+});
