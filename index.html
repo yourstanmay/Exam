@@ -5,6 +5,16 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="YoursTanmay Exam Platform - Test your knowledge with our online exams">
+
+    <!-- Preload critical resources with correct integrity attributes -->
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" as="style"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" as="style">
+    <link rel="preload" href="asset/css/mainstyle.css" as="style">
+    <link rel="preload" href="https://code.jquery.com/jquery-3.4.1.min.js" as="script"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous">
 
     <!-- CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css"
@@ -40,23 +50,36 @@
     <div class="container">
         <!-- Authentication -->
         <div id="passwordScreen" class="password-container">
-            <h5><b>🔒Enter Exam Password</b></h5>
-            <input type="password" id="examPassword" placeholder="Enter Password" class="form-control">
-            <button id="submitButton" onclick="startLoading()" class="btn btn-primary mt-3">Submit</button>
-            <div id="loader" class="loader"></div> <!-- ✅ Loader -->
-            <p id="errorMessage" class="error"></p>
+            <div class="text-center mb-4">
+                <i class="fas fa-lock fa-3x mb-3 text-primary"></i>
+                <h4 class="mb-3">Secure Access</h4>
+                <p class="text-muted small">Please enter the exam password to continue</p>
+            </div>
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fas fa-key"></i></span>
+                </div>
+                <input type="password" id="examPassword" placeholder="Enter Password" class="form-control" required>
+            </div>
+            <button id="submitButton" onclick="startLoading()" class="btn btn-primary btn-block mt-4">
+                <i class="fas fa-sign-in-alt mr-2"></i>Submit
+            </button>
+            <div id="loader" class="loader"></div>
+            <p id="errorMessage" class="error mt-3"></p>
         </div>
 
-        <form id="examForm"></form>
+        <!-- Exam Selection Container -->
+        <div id="examSelectionContainer" class="exam-selection-container hidden"></div>
+
+        <!-- Exam Form -->
+        <form id="examForm" class="hidden"></form>
     </div>
     <br>
 
-    <!-- ********************************************************* -->
     <!-- Goto Top -->
     <button onclick="topFunction()" id="myBtn" title="Go to top">
         <i class="fas fa-arrow-up"></i>
     </button>
-    </div>
 
     <!-- Footer -->
     <div id="footer"></div>
@@ -65,27 +88,78 @@
     <!-- jQuery first, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"
         integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+
+    <!-- Defer non-critical scripts -->
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
-        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
-        crossorigin="anonymous"></script>
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"
+        defer></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
-        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
-        crossorigin="anonymous"></script>
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"
+        defer></script>
 
     <!--Common Template-->
     <script src="https://yourstanmay.github.io/Asset/js/Template/footer.js" id="footer-bar" defer></script>
 
-    <script type="text/javascript" src="https://yourstanmay.github.io/Asset/js/top.js"></script>
-    <script type="text/javascript" src="https://yourstanmay.github.io/Asset/js/particles.js"></script>
-    <script type="text/javascript" src="https://yourstanmay.github.io/Asset/js/app.js"></script>
-    <script
-        src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js?lang=css&amp;skin=sunburst"></script>
+    <script type="text/javascript" src="https://yourstanmay.github.io/Asset/js/top.js" defer></script>
+    <script type="text/javascript" src="https://yourstanmay.github.io/Asset/js/particles.js" defer></script>
+    <script type="text/javascript" src="https://yourstanmay.github.io/Asset/js/app.js" defer></script>
 
     <!-- Custom JS -->
-    <script type="text/javascript" src="asset/js/mainscript.js"></script>
     <script type="text/javascript" src="asset/js/examnav.js"></script>
-    <script type="text/javascript" src="module/sap/questions/questions.js"></script>
-    <script type="text/javascript" src="module/sap/answerkey/answerkey.js"></script>
+    <script type="text/javascript" src="asset/js/mainscript.js"></script>
+    <!-- Exam scripts will be loaded dynamically -->
+
+    <!-- Simple script to ensure buttons work -->
+    <script>
+        // Make sure jQuery is ready before doing anything
+        $(document).ready(function () {
+
+            // Force refresh the navbar to ensure buttons are properly set up
+            if (typeof renderNavbar === 'function') {
+                renderNavbar();
+            }
+
+            // Add direct jQuery handlers for the buttons
+            // These will be applied after the navbar is rendered
+            setTimeout(function () {
+                // Reset button handler
+                $(document).on('click', '#resetExamButton', function (e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+
+                    if (typeof window.resetExam === 'function') {
+                        window.resetExam();
+                    } else {
+                        console.error("resetExam function not found");
+                    }
+
+                    return false;
+                });
+
+                // Logout button handler
+                $(document).on('click', '#logoutButton', function (e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    location.reload();
+                    return false;
+                });
+
+                // Exam Top button handler
+                $(document).on('click', '#examTopBtn', function (e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+
+                    if (typeof window.examScrollToTop === 'function') {
+                        window.examScrollToTop();
+                    } else {
+                        console.error("examScrollToTop function not found");
+                    }
+
+                    return false;
+                });
+            }, 500);
+        });
+    </script>
 
 </body>
 

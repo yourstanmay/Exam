@@ -1,4 +1,10 @@
-const answers = [
+/**
+ * SAP Commerce Developer Basic Exam Answer Key
+ * File: sap_developer_basic_anskey.js
+ * Description: Contains correct answers for the SAP Commerce Developer Basic certification exam
+ */
+
+window.answers = [
     [1, 2, 3],  // Q1: Multiselect
     [0, 3],     // Q2: Multiselect
     [0, 1, 3],  // Q3: Multiselect
@@ -24,4 +30,4 @@ const answers = [
     [0, 1],     // Q23: Multiselect
     2,          // Q24: Single-choice
     [ 1, 3]   // Q25: Multiselect
-];
+]; 
