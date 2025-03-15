@@ -243,6 +243,7 @@ function renderQuestions() {
                     <h3><i class="fas fa-clipboard-list"></i>${currentExam.name}</h3>
                     <div class="exam-title-buttons">
                         <button class="btn btn-success" id="result"><i class="fas fa-star"></i> Score: 0/${currentExam.questions.length}</button>
+                        <button class="btn btn-primary" id="answerAllButton"><i class="fas fa-check-double"></i> Answer All</button>
                         <button class="btn btn-warning" id="resetExamButton"><i class="fas fa-redo-alt"></i> Reset</button>
                         <button class="btn btn-danger" id="exitExamButton"><i class="fas fa-sign-out-alt"></i> Exit</button>
                     </div>
@@ -531,7 +532,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 // Clean implementation of the reset exam functionality
-function resetExam() {
+function resetExam(fromExit = false) {
   // Check if already processing
   if (resetExam.isProcessing) {
     return;
@@ -587,10 +588,10 @@ function resetExam() {
     // Scroll to top
     window.scrollTo({ top: 0, behavior: "smooth" });
     
-    // If this is being called during exit, don't show the toast
-    if (!document.getElementById("examForm").classList.contains("hidden")) {
+    // Only show toast if not called from exit button
+    if (!fromExit && !document.getElementById("examForm").classList.contains("hidden")) {
       // Show confirmation message
-      showToast("Exam has been reset. Good luck!");
+      showToast("Exam has been reset.");
     }
   } catch (error) {
     console.error("Error resetting exam:", error);
@@ -682,6 +683,107 @@ function showToast(message) {
   }, 3000);
 }
 
+// Show a custom confirmation modal
+function showConfirmModal(message, onConfirm, onCancel) {
+  // Create modal backdrop
+  const modalBackdrop = document.createElement('div');
+  modalBackdrop.className = 'custom-modal-backdrop';
+  
+  // Create modal container
+  const modalContainer = document.createElement('div');
+  modalContainer.className = 'custom-modal-container';
+  
+  // Create modal content
+  const modalContent = document.createElement('div');
+  modalContent.className = 'custom-modal-content';
+  
+  // Create modal header
+  const modalHeader = document.createElement('div');
+  modalHeader.className = 'custom-modal-header';
+  modalHeader.innerHTML = `
+    <h4><i class="fas fa-exclamation-triangle text-warning"></i> Confirmation Required</h4>
+  `;
+  
+  // Create modal body
+  const modalBody = document.createElement('div');
+  modalBody.className = 'custom-modal-body';
+  modalBody.innerHTML = `
+    <p>${message}</p>
+  `;
+  
+  // Create modal footer with buttons
+  const modalFooter = document.createElement('div');
+  modalFooter.className = 'custom-modal-footer';
+  
+  // Create cancel button
+  const cancelButton = document.createElement('button');
+  cancelButton.className = 'btn btn-secondary';
+  cancelButton.innerHTML = '<i class="fas fa-times"></i> Cancel';
+  cancelButton.addEventListener('click', () => {
+    // Remove modal
+    document.body.removeChild(modalBackdrop);
+    // Call cancel callback if provided
+    if (typeof onCancel === 'function') {
+      onCancel();
+    }
+  });
+  
+  // Create confirm button
+  const confirmButton = document.createElement('button');
+  confirmButton.className = 'btn btn-danger';
+  confirmButton.innerHTML = '<i class="fas fa-check"></i> Confirm';
+  confirmButton.addEventListener('click', () => {
+    // Remove modal
+    document.body.removeChild(modalBackdrop);
+    // Call confirm callback
+    if (typeof onConfirm === 'function') {
+      onConfirm();
+    }
+  });
+  
+  // Add buttons to footer
+  modalFooter.appendChild(cancelButton);
+  modalFooter.appendChild(confirmButton);
+  
+  // Assemble modal
+  modalContent.appendChild(modalHeader);
+  modalContent.appendChild(modalBody);
+  modalContent.appendChild(modalFooter);
+  modalContainer.appendChild(modalContent);
+  modalBackdrop.appendChild(modalContainer);
+  
+  // Add modal to body
+  document.body.appendChild(modalBackdrop);
+  
+  // Focus confirm button
+  setTimeout(() => {
+    confirmButton.focus();
+  }, 100);
+  
+  // Add keyboard event listeners
+  document.addEventListener('keydown', function escapeHandler(e) {
+    if (e.key === 'Escape') {
+      document.body.removeChild(modalBackdrop);
+      document.removeEventListener('keydown', escapeHandler);
+      if (typeof onCancel === 'function') {
+        onCancel();
+      }
+    } else if (e.key === 'Enter') {
+      document.body.removeChild(modalBackdrop);
+      document.removeEventListener('keydown', escapeHandler);
+      if (typeof onConfirm === 'function') {
+        onConfirm();
+      }
+    }
+  });
+  
+  // Add animation class after a small delay
+  setTimeout(() => {
+    modalBackdrop.classList.add('show');
+    modalContainer.classList.add('show');
+  }, 10);
+}
+
 // Setup event listeners for the buttons in the title bar
 function setupTitleBarButtons() {
   // Reset button
@@ -695,52 +797,60 @@ function setupTitleBarButtons() {
     });
   }
 
+  // Answer All button
+  const answerAllButton = document.getElementById("answerAllButton");
+  if (answerAllButton) {
+    answerAllButton.addEventListener("click", function (e) {
+      e.preventDefault();
+      answerAll();
+    });
+  }
+
   // Exit Exam button
   const exitButton = document.getElementById("exitExamButton");
   if (exitButton) {
     exitButton.addEventListener("click", function (e) {
       e.preventDefault();
 
-      // Show confirmation dialog
-      if (
-        confirm(
-          "Are you sure you want to exit this exam? Your progress will be lost."
-        )
-      ) {
-        // Reset the exam form first
-        if (typeof window.resetExam === "function") {
-          window.resetExam();
-        }
-        
-        // Hide the exam form
-        const examForm = document.getElementById("examForm");
-        if (examForm) {
-          examForm.classList.add("hidden");
-        }
+      // Show custom confirmation modal
+      showConfirmModal(
+        "Are you sure you want to exit this exam? Your progress will be lost.",
+        function() {
+          // Reset the exam form first, passing true to indicate it's from exit
+          if (typeof window.resetExam === "function") {
+            window.resetExam(true);
+          }
+          
+          // Hide the exam form
+          const examForm = document.getElementById("examForm");
+          if (examForm) {
+            examForm.classList.add("hidden");
+          }
 
-        // Remove the exam title container
-        const examTitleContainer =
-          document.getElementById("examTitleContainer");
-        if (examTitleContainer) {
-          examTitleContainer.remove();
-        }
+          // Remove the exam title container
+          const examTitleContainer =
+            document.getElementById("examTitleContainer");
+          if (examTitleContainer) {
+            examTitleContainer.remove();
+          }
 
-        // Show the exam selection container
-        const examSelectionContainer = document.getElementById(
-          "examSelectionContainer"
-        );
-        if (examSelectionContainer) {
-          examSelectionContainer.classList.remove("hidden");
-        }
+          // Show the exam selection container
+          const examSelectionContainer = document.getElementById(
+            "examSelectionContainer"
+          );
+          if (examSelectionContainer) {
+            examSelectionContainer.classList.remove("hidden");
+          }
 
-        // Refresh the navbar
-        if (typeof refreshNavbar === "function") {
-          refreshNavbar();
-        }
+          // Refresh the navbar
+          if (typeof refreshNavbar === "function") {
+            refreshNavbar();
+          }
 
-        // Show confirmation message
-        showToast("Exam exited successfully");
-      }
+          // Show confirmation message
+          showToast("Exam exited successfully");
+        }
+      );
     });
   }
 }
@@ -758,3 +868,66 @@ function examScrollToTop() {
 
 // Make examScrollToTop function globally accessible
 window.examScrollToTop = examScrollToTop;
+
+// Function to automatically answer all questions
+function answerAll() {
+  // Check if already processing
+  if (answerAll.isProcessing) {
+    return;
+  }
+
+  // Set processing flag
+  answerAll.isProcessing = true;
+
+  try {
+    // Validate exam data
+    if (!currentExam || !currentExam.questions || currentExam.questions.length === 0) {
+      console.log("No exam to answer");
+      return;
+    }
+
+    // Show confirmation modal
+    showConfirmModal(
+      "This will automatically select answers for all questions. Continue?",
+      function() {
+        // Answer all questions
+        currentExam.questions.forEach((q, index) => {
+          // Get correct answers for this question
+          let correctAnswers = Array.isArray(currentExam.answers[index])
+            ? currentExam.answers[index]
+            : [currentExam.answers[index]];
+
+          // Select the correct answers
+          const inputs = document.getElementsByName(`q${index}`);
+          for (let i = 0; i < inputs.length; i++) {
+            inputs[i].checked = correctAnswers.includes(parseInt(inputs[i].value));
+          }
+        });
+
+        // Update score and progress
+        updateScore();
+        updateProgress();
+
+        // Scroll to top
+        window.scrollTo({ top: 0, behavior: "smooth" });
+
+        // Show confirmation message
+        showToast("All questions have been answered.");
+      }
+    );
+  } catch (error) {
+    console.error("Error answering all questions:", error);
+    showToast("There was an error answering all questions. Please try again.");
+  } finally {
+    // Clear processing flag after a delay
+    setTimeout(() => {
+      answerAll.isProcessing = false;
+    }, 500);
+  }
+}
+
+// Initialize the processing flag
+answerAll.isProcessing = false;
+
+// Make the function available globally
+window.answerAll = answerAll;
