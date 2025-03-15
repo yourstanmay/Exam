@@ -243,6 +243,7 @@ function renderQuestions() {
                     <h3><i class="fas fa-clipboard-list"></i>${currentExam.name}</h3>
                     <div class="exam-title-buttons">
                         <button class="btn btn-success" id="result"><i class="fas fa-star"></i> Score: 0/${currentExam.questions.length}</button>
+                        <button class="btn btn-primary" id="answerAllButton"><i class="fas fa-check-double"></i> Answer All</button>
                         <button class="btn btn-warning" id="resetExamButton"><i class="fas fa-redo-alt"></i> Reset</button>
                         <button class="btn btn-danger" id="exitExamButton"><i class="fas fa-sign-out-alt"></i> Exit</button>
                     </div>
@@ -796,6 +797,15 @@ function setupTitleBarButtons() {
     });
   }
 
+  // Answer All button
+  const answerAllButton = document.getElementById("answerAllButton");
+  if (answerAllButton) {
+    answerAllButton.addEventListener("click", function (e) {
+      e.preventDefault();
+      answerAll();
+    });
+  }
+
   // Exit Exam button
   const exitButton = document.getElementById("exitExamButton");
   if (exitButton) {
@@ -858,3 +868,66 @@ function examScrollToTop() {
 
 // Make examScrollToTop function globally accessible
 window.examScrollToTop = examScrollToTop;
+
+// Function to automatically answer all questions
+function answerAll() {
+  // Check if already processing
+  if (answerAll.isProcessing) {
+    return;
+  }
+
+  // Set processing flag
+  answerAll.isProcessing = true;
+
+  try {
+    // Validate exam data
+    if (!currentExam || !currentExam.questions || currentExam.questions.length === 0) {
+      console.log("No exam to answer");
+      return;
+    }
+
+    // Show confirmation modal
+    showConfirmModal(
+      "This will automatically select answers for all questions. Continue?",
+      function() {
+        // Answer all questions
+        currentExam.questions.forEach((q, index) => {
+          // Get correct answers for this question
+          let correctAnswers = Array.isArray(currentExam.answers[index])
+            ? currentExam.answers[index]
+            : [currentExam.answers[index]];
+
+          // Select the correct answers
+          const inputs = document.getElementsByName(`q${index}`);
+          for (let i = 0; i < inputs.length; i++) {
+            inputs[i].checked = correctAnswers.includes(parseInt(inputs[i].value));
+          }
+        });
+
+        // Update score and progress
+        updateScore();
+        updateProgress();
+
+        // Scroll to top
+        window.scrollTo({ top: 0, behavior: "smooth" });
+
+        // Show confirmation message
+        showToast("All questions have been answered.");
+      }
+    );
+  } catch (error) {
+    console.error("Error answering all questions:", error);
+    showToast("There was an error answering all questions. Please try again.");
+  } finally {
+    // Clear processing flag after a delay
+    setTimeout(() => {
+      answerAll.isProcessing = false;
+    }, 500);
+  }
+}
+
+// Initialize the processing flag
+answerAll.isProcessing = false;
+
+// Make the function available globally
+window.answerAll = answerAll;
