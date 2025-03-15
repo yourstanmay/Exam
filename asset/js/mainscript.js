@@ -531,7 +531,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 // Clean implementation of the reset exam functionality
-function resetExam() {
+function resetExam(fromExit = false) {
   // Check if already processing
   if (resetExam.isProcessing) {
     return;
@@ -587,10 +587,10 @@ function resetExam() {
     // Scroll to top
     window.scrollTo({ top: 0, behavior: "smooth" });
     
-    // If this is being called during exit, don't show the toast
-    if (!document.getElementById("examForm").classList.contains("hidden")) {
+    // Only show toast if not called from exit button
+    if (!fromExit && !document.getElementById("examForm").classList.contains("hidden")) {
       // Show confirmation message
-      showToast("Exam has been reset. Good luck!");
+      showToast("Exam has been reset.");
     }
   } catch (error) {
     console.error("Error resetting exam:", error);
@@ -707,9 +707,9 @@ function setupTitleBarButtons() {
           "Are you sure you want to exit this exam? Your progress will be lost."
         )
       ) {
-        // Reset the exam form first
+        // Reset the exam form first, passing true to indicate it's from exit
         if (typeof window.resetExam === "function") {
-          window.resetExam();
+          window.resetExam(true);
         }
         
         // Hide the exam form

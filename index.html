@@ -107,59 +107,6 @@
     <!-- Custom JS -->
     <script type="text/javascript" src="asset/js/examnav.js"></script>
     <script type="text/javascript" src="asset/js/mainscript.js"></script>
-    <!-- Exam scripts will be loaded dynamically -->
-
-    <!-- Simple script to ensure buttons work -->
-    <script>
-        // Make sure jQuery is ready before doing anything
-        $(document).ready(function () {
-
-            // Force refresh the navbar to ensure buttons are properly set up
-            if (typeof renderNavbar === 'function') {
-                renderNavbar();
-            }
-
-            // Add direct jQuery handlers for the buttons
-            // These will be applied after the navbar is rendered
-            setTimeout(function () {
-                // Reset button handler
-                $(document).on('click', '#resetExamButton', function (e) {
-                    e.preventDefault();
-                    e.stopPropagation();
-
-                    if (typeof window.resetExam === 'function') {
-                        window.resetExam();
-                    } else {
-                        console.error("resetExam function not found");
-                    }
-
-                    return false;
-                });
-
-                // Logout button handler
-                $(document).on('click', '#logoutButton', function (e) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    location.reload();
-                    return false;
-                });
-
-                // Exam Top button handler
-                $(document).on('click', '#examTopBtn', function (e) {
-                    e.preventDefault();
-                    e.stopPropagation();
-
-                    if (typeof window.examScrollToTop === 'function') {
-                        window.examScrollToTop();
-                    } else {
-                        console.error("examScrollToTop function not found");
-                    }
-
-                    return false;
-                });
-            }, 500);
-        });
-    </script>
 
 </body>
 
