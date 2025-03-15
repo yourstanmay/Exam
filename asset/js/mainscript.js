@@ -682,6 +682,107 @@ function showToast(message) {
   }, 3000);
 }
 
+// Show a custom confirmation modal
+function showConfirmModal(message, onConfirm, onCancel) {
+  // Create modal backdrop
+  const modalBackdrop = document.createElement('div');
+  modalBackdrop.className = 'custom-modal-backdrop';
+  
+  // Create modal container
+  const modalContainer = document.createElement('div');
+  modalContainer.className = 'custom-modal-container';
+  
+  // Create modal content
+  const modalContent = document.createElement('div');
+  modalContent.className = 'custom-modal-content';
+  
+  // Create modal header
+  const modalHeader = document.createElement('div');
+  modalHeader.className = 'custom-modal-header';
+  modalHeader.innerHTML = `
+    <h4><i class="fas fa-exclamation-triangle text-warning"></i> Confirmation Required</h4>
+  `;
+  
+  // Create modal body
+  const modalBody = document.createElement('div');
+  modalBody.className = 'custom-modal-body';
+  modalBody.innerHTML = `
+    <p>${message}</p>
+  `;
+  
+  // Create modal footer with buttons
+  const modalFooter = document.createElement('div');
+  modalFooter.className = 'custom-modal-footer';
+  
+  // Create cancel button
+  const cancelButton = document.createElement('button');
+  cancelButton.className = 'btn btn-secondary';
+  cancelButton.innerHTML = '<i class="fas fa-times"></i> Cancel';
+  cancelButton.addEventListener('click', () => {
+    // Remove modal
+    document.body.removeChild(modalBackdrop);
+    // Call cancel callback if provided
+    if (typeof onCancel === 'function') {
+      onCancel();
+    }
+  });
+  
+  // Create confirm button
+  const confirmButton = document.createElement('button');
+  confirmButton.className = 'btn btn-danger';
+  confirmButton.innerHTML = '<i class="fas fa-check"></i> Confirm';
+  confirmButton.addEventListener('click', () => {
+    // Remove modal
+    document.body.removeChild(modalBackdrop);
+    // Call confirm callback
+    if (typeof onConfirm === 'function') {
+      onConfirm();
+    }
+  });
+  
+  // Add buttons to footer
+  modalFooter.appendChild(cancelButton);
+  modalFooter.appendChild(confirmButton);
+  
+  // Assemble modal
+  modalContent.appendChild(modalHeader);
+  modalContent.appendChild(modalBody);
+  modalContent.appendChild(modalFooter);
+  modalContainer.appendChild(modalContent);
+  modalBackdrop.appendChild(modalContainer);
+  
+  // Add modal to body
+  document.body.appendChild(modalBackdrop);
+  
+  // Focus confirm button
+  setTimeout(() => {
+    confirmButton.focus();
+  }, 100);
+  
+  // Add keyboard event listeners
+  document.addEventListener('keydown', function escapeHandler(e) {
+    if (e.key === 'Escape') {
+      document.body.removeChild(modalBackdrop);
+      document.removeEventListener('keydown', escapeHandler);
+      if (typeof onCancel === 'function') {
+        onCancel();
+      }
+    } else if (e.key === 'Enter') {
+      document.body.removeChild(modalBackdrop);
+      document.removeEventListener('keydown', escapeHandler);
+      if (typeof onConfirm === 'function') {
+        onConfirm();
+      }
+    }
+  });
+  
+  // Add animation class after a small delay
+  setTimeout(() => {
+    modalBackdrop.classList.add('show');
+    modalContainer.classList.add('show');
+  }, 10);
+}
+
 // Setup event listeners for the buttons in the title bar
 function setupTitleBarButtons() {
   // Reset button
@@ -701,46 +802,45 @@ function setupTitleBarButtons() {
     exitButton.addEventListener("click", function (e) {
       e.preventDefault();
 
-      // Show confirmation dialog
-      if (
-        confirm(
-          "Are you sure you want to exit this exam? Your progress will be lost."
-        )
-      ) {
-        // Reset the exam form first, passing true to indicate it's from exit
-        if (typeof window.resetExam === "function") {
-          window.resetExam(true);
-        }
-        
-        // Hide the exam form
-        const examForm = document.getElementById("examForm");
-        if (examForm) {
-          examForm.classList.add("hidden");
-        }
+      // Show custom confirmation modal
+      showConfirmModal(
+        "Are you sure you want to exit this exam? Your progress will be lost.",
+        function() {
+          // Reset the exam form first, passing true to indicate it's from exit
+          if (typeof window.resetExam === "function") {
+            window.resetExam(true);
+          }
+          
+          // Hide the exam form
+          const examForm = document.getElementById("examForm");
+          if (examForm) {
+            examForm.classList.add("hidden");
+          }
 
-        // Remove the exam title container
-        const examTitleContainer =
-          document.getElementById("examTitleContainer");
-        if (examTitleContainer) {
-          examTitleContainer.remove();
-        }
+          // Remove the exam title container
+          const examTitleContainer =
+            document.getElementById("examTitleContainer");
+          if (examTitleContainer) {
+            examTitleContainer.remove();
+          }
 
-        // Show the exam selection container
-        const examSelectionContainer = document.getElementById(
-          "examSelectionContainer"
-        );
-        if (examSelectionContainer) {
-          examSelectionContainer.classList.remove("hidden");
-        }
+          // Show the exam selection container
+          const examSelectionContainer = document.getElementById(
+            "examSelectionContainer"
+          );
+          if (examSelectionContainer) {
+            examSelectionContainer.classList.remove("hidden");
+          }
 
-        // Refresh the navbar
-        if (typeof refreshNavbar === "function") {
-          refreshNavbar();
-        }
+          // Refresh the navbar
+          if (typeof refreshNavbar === "function") {
+            refreshNavbar();
+          }
 
-        // Show confirmation message
-        showToast("Exam exited successfully");
-      }
+          // Show confirmation message
+          showToast("Exam exited successfully");
+        }
+      );
     });
   }
 }
