@@ -1,4 +1,14 @@
-const questions = [
+/**
+ * SAP Commerce Developer Basic Exam Questions
+ * File: sap_developer_basic_que.js
+ * Description: Contains questions for the SAP Commerce Developer Basic certification exam
+ */
+
+// Use window scope to avoid conflicts with other files
+window.examName = "SAP Commerce Developer Basic";
+window.examCode = "sap_developer_basic";
+
+window.questions = [
     {
         number: 1,
         question: "When you define a new SolrIndexProperty for a product facet, what can be configured with regard to appearance and behavior?",
@@ -149,4 +159,4 @@ const questions = [
         options: ["Changes can be made without loss of classification attributes data", "Rebuilding and redeployment are not required.", "Classification attributes can be applied to any type", "Business users can create or modify classification attributes using the backoffice"],
         multiselect: true
     }
-];
+]; 
