@@ -17,7 +17,7 @@ const availableExams = [
     code: "sap_developer_advanced",
     description:
       "Advanced assessment of SAP Commerce Cloud development skills and best practices.",
-    questionCount: 30,
+    questionCount: 25,
     icon: "fas fa-code",
   },
   {

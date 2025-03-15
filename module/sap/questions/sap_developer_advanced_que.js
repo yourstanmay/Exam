@@ -9,154 +9,312 @@ window.examName = "SAP Commerce Developer Advanced";
 window.examCode = "sap_developer_advanced";
 
 window.questions = [
-    {
-        number: 1,
-        question: "When you define a new SolrIndexProperty for a product facet, what can be configured with regard to appearance and behavior?",
-        options: ["Image matching based on colors", "Multiselect with AND or OR relations", "Product prices for multi currency indexing", "Multiple values from each indexed object"],
-        multiselect: true
-    },
-    {
-        number: 2,
-        question: "What are the advantages of using keyword redirection within Search and Navigation?",
-        options: ["Customers can be redirected directly to a URL specified by the vendor", "Keywords specify synonyms that redirect to standard catalog terms", "Keywords make Solr searches more efficient", "Keywords redirects can be easily configured using the Backoffice"],
-        multiselect: true
-    },
-    {
-        number: 3,
-        question: "Which of the following order splitting strategies are provided in the SAP Commerce basecommerce extension?",
-        options: ["SplitByWarehouse", "SplitByNamedDeliveryDate", "splitByOrderDate", "splitByAvailableCount"],
-        multiselect: true
-    },
-    {
-        number: 4,
-        question: "Why would you create an addOn extension?",
-        options: ["To extend the Accelerator functionality without modifying the delivered business functionality", "To extend an existing type in the SAP Commerce System", "To add new user interface components into the Accelerator code", "To add a new type into the SAP Commerce system"],
-        multiselect: false
-    },
-    {
-        number: 5,
-        question: "How is a page typically loaded from a specific accelerator URL?",
-        options: ["A controller method is defined from the URL using the RequestMapping annotation. This then returns the name of the page.", "The path to the page is directly referenced by the URL.", "A Façade method is determined from the URL using the naming convention. This then retrieves the name of the page from the database.", "The path to the page is determined from a singleton that knows the location of the page based, on the static mapping from URL to page name."],
-        multiselect: false
-    },
-    {
-        number: 6,
-        question: "Which interface do you re-implement to select different PriceRows for cart calculation?",
-        options: ["FindPriceStratergy", "CommerceCartService", "CalculationService", "Europe1PriceFactory"],
-        multiselect: false
-    },
-    {
-        number: 7,
-        question: "Which one of the following ImpEx headers can be used to configure user rights for catalog versions?",
-        options: ["INSERT_UPDATE SearchRestriction", "INSERT_UPDATE BTGSegment", "$START_USERRIGHTS", "INSERT_UPDATE CatalogVersion"],
-        multiselect: false
-    },
-    {
-        number: 8,
-        question: "What happens when you synchronize a media item stored in Hybris from a Staged version to an Online Version?",
-        options: ["Both Staged and Online Media items will refer to the same image file on the file system.", "The values of the attribute of the source item in the Staged catalog are copied to the target item in the Online catalog", "The Staged and Online media items will refer to two different image files on the filesystem", "The different formats of the Staged media item image will be automatically synchronized to the Online catalog version"],
-        multiselect: true
-    },
-    {
-        number: 9,
-        question: "How can you start a business process in SAP Commerce?",
-        options: ["Invoke the appropriate method of the BusinessProcessService from a script in the hAC scripting console to start the business process.", "Invoke the appropriate method of the BusinessProcessService from Java code to start the business process", "Use the hMC Business Process section to start the business process", "Use the Backoffice Business Process section to start the business process"],
-        multiselect: true
-    },
-    {
-        number: 10,
-        question: "How can a view of a widget be defined?",
-        options: ["As a *.zul file", "In Java", "As a velocity template", "As a *.jsp file"],
-        multiselect: true
-    },
-    {
-        number: 11,
-        question: "What do you need to provide to define the data that is to be loaded into solr index?",
-        options: ["An impex script for full load", "A flexible search query for a full load", "A flexible search query for an incremental update", "A solr configuration file"],
-        multiselect: true
-    },
-    {
-        number: 12,
-        question: "When are consignments created for an order?",
-        options: ["When an administrator approves the order", "After the order is placed and before it is sourced successfully", "When the user adds items to the cart", "After the order is placed and after it is sourced successfully"],
-        multiselect: false
-    },
-    {
-        number: 13,
-        question: "You are asked to define a new business process. What steps do you perform?",
-        options: ["Define the actions as Spring beans", "List the actions in a process xml file", "Create actions in java code", "Define action as new item type"],
-        multiselect: true
-    },
-    {
-        number: 14,
-        question: "What is the difference between CMS page restriction and search restriction?",
-        options: ["Search restrictions are applied automatically in the FlexibleSearch. CMS restriction must be involved explicitly for the frontend", "CMS page restrictions are transformed into search restrictions at runtime", "CMS page restriction are catalog version aware. Search restrictions are not catalog version aware", "All applicable search restrictions are applied from the current context. There can be only one CMS page restrictions for a page"],
-        multiselect: true
-    },
-    {
-        number: 15,
-        question: "In which implementation is the JSR 303 standard used?",
-        options: ["Backoffice validation", "Backoffice permission management", "Backoffice SSO(Single sign on)", "Backoffice Dynamic forms"],
-        multiselect: false
-    },
-    {
-        number: 16,
-        question: "What are Addons specifically designed to allow an SAP Commerce developer to do?",
-        options: ["Extend the Accelerator storefront", "Extend the backoffice", "Import sample data by convention", "Provide a new web application"],
-        multiselect: true
-    },
-    {
-        number: 17,
-        question: "What is the recommended way to deploy Solr in a production environment?",
-        options: ["As one master server and multiple slave servers", "As a cluster of co-equal master servers", "As a standalone server", "As embedded with the hybris server"],
-        multiselect: false
-    },
-    {
-        number: 18,
-        question: "What can you do in the browser area in the WCMS page view perspective?",
-        options: ["Edit pages and page components", "Add restriction on a page", "Synchronize a page", "Synchronize complete content catalogs"],
-        multiselect: true
-    },
-    {
-        number: 19,
-        question: "What can you configure in a widget definition (definition.xml) file?",
-        options: ["The available virtual sockets", "The view file", "The business logic of the widget via a bean shell script", "The default values for widget settings"],
-        multiselect: true
-    },
-    {
-        number: 20,
-        question: "You need to have region-specific prices in the cart calculation. What customization would be the easiest to implement?",
-        options: ["Create a region-specific PriceFactory", "Create a region-specific CalculationService", "Create region-specific UserPriceGroups", "Inject a new region attribute into PriceRow"],
-        multiselect: false
-    },
-    {
-        number: 21,
-        question: "Which methods can you use to create a new Omni Commerce Connect(OCC) web service?",
-        options: ["Use ant extgen to create an AddOn extension using acceleratoraddon as the template", "Use ant extgen to create an AddOn extension using yoccaddon as the template", "Use ant extgen to create a new extension using ycommercewebservices as the template", "Use ant modulegen to create a new extension using yacceleratorstorefront as the template"],
-        multiselect: true
-    },
-    {
-        number: 22,
-        question: "What is the best practice to add a new parameter to an existing method of CommerceCartService?",
-        options: ["Add a new property to CommerceCartParameter in a beans.xml file", "Extend the default strategy called by the method to handle the new parameter", "Overload the existing method of CommerceCartService by adding the new parameter", "Extend the default implementation of the method in order to handle the new parameter"],
-        multiselect: true
-    },
-    {
-        number: 23,
-        question: "What is included in a CMS page template?",
-        options: ["Content slot names", "Velocity template", "Zul page templates", "Component controllers"],
-        multiselect: true
-    },
-    {
-        number: 24,
-        question: "When a customer places an order using the default order management system, at which stage does the fulfillment process send the notification that the order is placed?",
-        options: ["After the order has been completely sourced", "At the first stage of the fulfillment process", "After the order has been fraud checked", "After the payment has been processed"],
-        multiselect: false
-    },
-    {
-        number: 25,
-        question: "What are the advantages of using classification attributes?",
-        options: ["Changes can be made without loss of classification attributes data", "Rebuilding and redeployment are not required.", "Classification attributes can be applied to any type", "Business users can create or modify classification attributes using the backoffice"],
-        multiselect: true
-    }
-]; 
+  {
+    number: 1,
+    question:
+      "Which one of the following design patterns provides a single, simplified interface to a complex and interdependent model?",
+    options: [
+      "Strategy Objects",
+      "Model View Controller or the Front-end Layer",
+      "SAP Hybris Service Layer",
+      "Façade Layer",
+    ],
+    multiselect: false,
+  },
+  {
+    number: 2,
+    question:
+      "For the following query to be imported successfully what changes need to be done ? [Choose 2 correct options] </br>$productCatalog=apparelProductCatalog</br>$productCatalogName=Apparel Product Catalog</br>INSERT_UPDATE ApparelProduct;code;$catalogVersion;unit(code);supercategories(code,$catalogVersion)</br>:300441142 ;; pieces;Blue Tomato,caps",
+    options: [
+      "add a macro for catalog version",
+      "change the attribute header INSERT_UPDATE to INSERT_UNIQUE",
+      "mark code with [unique=true]",
+      "use the type Product instead of ApparelProduct",
+    ],
+    multiselect: true,
+  },
+  {
+    number: 3,
+    question:
+      "What is the default cardinality while defining an attribute in an itemtype?",
+    options: [
+      "One-to-many relation",
+      "One-to-one relation",
+      "Many-to-one relation",
+      "All of the above",
+    ],
+    multiselect: false,
+  },
+  {
+    number: 4,
+    question:
+      "What happens when you use a deployment tag in the items.xml? [Choose 3 correct options]",
+    options: [
+      "1:many relations are defined on a column",
+      "Many:many relations are defined as a table",
+      "1:many relations are stored in the links table",
+      "1:many relationships have an order column when ordered=true",
+      "1:many relations are binary objects",
+    ],
+    multiselect: true,
+  },
+  {
+    number: 5,
+    question:
+      '<pre><code>&lt;itemtype code="Product" extends="GenericItem" jaloclass="de.hybris.platform.jalo.product.Product" autocreate="true" generate="true"&gt;\n' +
+      '  &lt;deployment table="Products" typecode="1" propertytable="ProductProps"/&gt;\n' +
+      "  &lt;attributes&gt;\n" +
+      '    &lt;attribute autocreate="true" qualifier="expiryDate" type="java.lang.Long" generate="true"&gt;\n' +
+      '      &lt;persistence type="dynamic" attributeHandler="defaultExpiryDateHandler"/&gt;\n' +
+      '      &lt;modifiers read="true" write="false" search="false" optional="true"/&gt;\n' +
+      "    &lt;/attribute&gt;\n" +
+      "  &lt;/attributes&gt;\n" +
+      "&lt;/itemtype&gt;\n" +
+      "\n" +
+      '&lt;itemtype code="MyProduct" extends="Product" autocreate="true" generate="true"&gt;\n' +
+      '  &lt;deployment table="MyProduct" typecode="12345"/&gt;\n' +
+      "  &lt;attributes&gt;\n" +
+      '    &lt;attribute autocreate="true" qualifier="expiryDate" redeclare="true" type="java.lang.Long" generate="true"&gt;\n' +
+      '      &lt;persistence type="dynamic" attributeHandler="customExpiryDateHandler"/&gt;\n' +
+      '      &lt;modifiers read="true" write="false" search="false" optional="true"/&gt;\n' +
+      "    &lt;/attribute&gt;\n" +
+      "  &lt;/attributes&gt;\n" +
+      "&lt;/itemtype&gt;</code></pre>" +
+      "MyProduct extends Product. Dynamic attribute handler is changed to customExpiryDateHandler. Which of the following is TRUE?",
+    options: [
+      "Redeclaring an attribute handler has no impact. DefaultExpiryDateHandler is considered here.",
+      "You can only redeclare modifiers (read/write) of an attribute or make an attribute unique.",
+      "Throws cannot override attribute handler exception.",
+      "You can redeclare an attribute handler using redeclare.",
+    ],
+    multiselect: false,
+  },
+  {
+    number: 6,
+    question:
+      "Which among the following file is responsible for calling the Platform build for performing actual action.",
+    options: [
+      "extensioninfo.xsd",
+      "platformhome.properties",
+      "build.xml",
+      "extensioninfo.xml",
+    ],
+    multiselect: false,
+  },
+  {
+    number: 7,
+    question:
+      "The basic element that a SAP Hybris installation must consist of is:",
+    options: [
+      "platform_only",
+      "Commerce module",
+      "Content module",
+      "Orders module",
+      "Channel module",
+    ],
+    multiselect: false,
+  },
+  {
+    number: 8,
+    question: "What service should be used to save a model?",
+    options: [
+      "persistenceService",
+      "jaloService",
+      "serviceLayerService",
+      "modelService",
+    ],
+    multiselect: false,
+  },
+  {
+    number: 9,
+    question:
+      "Determine the validity of the below the FlexibleSearchQuery and choose the best possible answer:</br>select {p.description[fr]:o} from {Product as p} where {p:pk} in</br>( « select {p:pk} from {product as p} where {p:code} like'%0%' }} )",
+    options: [
+      "no",
+      "yes if we delete :o",
+      "yes if we delete the whole where statement",
+      "yes",
+    ],
+    multiselect: false,
+  },
+  {
+    number: 10,
+    question:
+      "Riya created an impex file with the name assignments-projectdata.impex under the correct folder hierarchy to enable Convention over Configuration style of import. <br> She happened to modify this file. What is the next task she needs to do in order to apply the changes made in the impex file?",
+    options: [
+      "Run ant all",
+      "Run ant clean all",
+      "Run updatesystem",
+      "Do nothing. Impex files are imported automatically for the ones who follow Convention over Configuration style of import",
+    ],
+    multiselect: false,
+  },
+  {
+    number: 11,
+    question:
+      "In the SAP ecosystem where are enumeration types stored? [Choose 2 correct options]",
+    options: [
+      "Non-dynamic enumerations are stored in a solr index",
+      "Dynamic enumerations are stored in the database",
+      "Dynamic enumerations are stored in property files",
+      "Non-dynamic enumerations are stored as Enumeration classes",
+    ],
+    multiselect: true,
+  },
+  {
+    number: 12,
+    question:
+      "Where are the model classes and data transfer objects created and stored whenever we build the system?",
+    options: [
+      "In the custom extension folder.",
+      "Inside platform folder of your custom extension.",
+      "Inside the config folder.",
+      "None of the options.",
+    ],
+    multiselect: false,
+  },
+  {
+    number: 13,
+    question:
+      "How is the primary key (PK) for a hybris item created? – [Choose 2 correct options]",
+    options: [
+      "It is generated from a counter and the type code of the item.",
+      "It is automatically generated and assigned.",
+      "It is generated from the hybris license.",
+      "It is created manually by setting it in a model of the item prior to saving the item.",
+    ],
+    multiselect: true,
+  },
+  {
+    number: 14,
+    question: "Properties defined in ____ file has the most precedence.",
+    options: [
+      "project.properties of extension",
+      "project.properties of platform",
+      "local.properties",
+      "Depends on the Order extension in local.properties",
+    ],
+    multiselect: false,
+  },
+  {
+    number: 15,
+    question:
+      "Which attribute enables you to add attributes to the hybris Models without saving the attribute in table.",
+    options: ["Jalo", "Dynamic", "Pesistance", "CMP"],
+    multiselect: false,
+  },
+  {
+    number: 16,
+    question: "Which tag allows us to create composed types?",
+    options: [
+      "<atomictypes></atomictypes>",
+      "<collectiontypes></collectiontypes>",
+      "<itemtypes></itemtypes>",
+      "<composedtypes></composedtypes>",
+    ],
+    multiselect: false,
+  },
+  {
+    number: 17,
+    question: "A recipe can help you perform which of the following tasks?",
+    options: [
+      "Install a required accelerator",
+      "Initialize a required accelerator",
+      "Start the hybris server",
+      "Clean and build the server changes",
+    ],
+    multiselect: false,
+  },
+  {
+    number: 18,
+    question: "Select the existing Impex header mode.",
+    options: ["INSERTED", "UPDATE_INSERT", "REMOVE", "DELETE"],
+    multiselect: false,
+  },
+  {
+    number: 19,
+    question:
+      "What statements are TRUE about the SAP Hybris server? [Choose 3 correct options]",
+    options: [
+      "based on Apache Tomcat",
+      "recommended for production",
+      "compatible with EJB",
+      "can be started from the command line",
+    ],
+    multiselect: true,
+  },
+  {
+    number: 20,
+    question:
+      "What are the various ways in which events can be created in SAP Commerce? [Choose 2 correct options]",
+    options: [
+      "by creating DTO in beans.xml",
+      "by creating item in items.xml",
+      "by creating template in impex",
+      "by creating bean in package",
+    ],
+    multiselect: true,
+  },
+  {
+    number: 21,
+    question:
+      '<pre><code>&lt;itemtype code="Customer" extends="User" \n' +
+      'jaloclass="de.hybris.platform.jalo.user.Customer" autocreate="true" generate="true"&gt;\n' +
+      "&lt;/itemtype&gt;</code></pre>" +
+      "Observe the above code snippet and choose the right statement from below?",
+    options: [
+      "Deployment table 'customers' created automatically.",
+      "Instances of 'Customer' saved in Deployment table of 'User'.",
+      "Throws exception.",
+      "Instances of 'Customer' saved in Deployment table of 'GenericItem'.",
+    ],
+    multiselect: false,
+  },
+  {
+    number: 22,
+    question:
+      "Which of the following are TRUE about the service layer in SAP Commerce? (Choose 3 correct options)",
+    options: [
+      "Facades orchestrates Converters",
+      "Facades orchestrates Services",
+      "Services orchestrates Strategies",
+      "Facades orchestrates strategies",
+    ],
+    multiselect: true,
+  },
+  {
+    number: 23,
+    question: "________ is called before a model is saved to the database.",
+    options: [
+      "LoadInterceptor",
+      "InitDefaultInterceptor",
+      "PrepareInterceptor",
+      "ValidateInterceptor",
+    ],
+    multiselect: false,
+  },
+  {
+    number: 24,
+    question:
+      "The platform is restarted without running ant all. Which of the following changes will still reflect on the platform? [Choose 2 correct options]",
+    options: [
+      "Definition of a new item type in the items.xml file for an extension.",
+      "Removal of an extension from the localextensions.xml file.",
+      "Addition of a spring bean definition.",
+      "Changes to database properties in the local.properties file.",
+    ],
+    multiselect: true,
+  },
+  {
+    number: 25,
+    question:
+      "Which of the following statements are TRUE about Cronjobs? [Choose 3 correct options]",
+    options: [
+      "Cronjobs are abortable only if isAboratable() method is implemented",
+      "Cronjobs can be started from backoffice",
+      "Cronjobs can be started from flexible search query",
+      "Cronjobs can be run manually using ant runcronjob",
+    ],
+    multiselect: true,
+  },
+];

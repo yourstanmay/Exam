@@ -463,7 +463,7 @@
 /* Exam Form Go to Top Button */
 #examTopBtn {
     position: sticky;
-    bottom: 20px;
+    bottom: 40px;
     right: 20px;
     z-index: 99;
     border: none;
