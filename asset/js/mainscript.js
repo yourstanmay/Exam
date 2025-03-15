@@ -325,7 +325,7 @@ function renderQuestions() {
 
   // Add the "Go to Top" button at the end of the form
   html += `
-        <button onclick="examScrollToTop()" id="examTopBtn" title="Go to top">
+        <button id="examTopBtn" title="Go to top">
             <i class="fas fa-arrow-up"></i>
         </button>
     `;
@@ -335,6 +335,15 @@ function renderQuestions() {
 
   // Cache the progress bar element
   domCache.examProgress = document.getElementById("exam-progress");
+
+  // Add event listener to the "Go to Top" button
+  const topButton = document.getElementById("examTopBtn");
+  if (topButton) {
+    topButton.addEventListener("click", function(e) {
+      e.preventDefault();
+      examScrollToTop();
+    });
+  }
 
   // Use event delegation for better performance
   domCache.examForm.addEventListener("change", function (e) {
